@@ -19,7 +19,6 @@ void FramerateUnlocker::Reload(int type, float framerate = 60.0)
 	}
 }
 
-
 void FramerateUnlocker::OnLoad()
 {
 	GetConfig()->SetCategoryComment("Tweaking", "Tweaking");
@@ -40,4 +39,14 @@ void FramerateUnlocker::OnPreStartMenu()
 void FramerateUnlocker::OnModifyConfig(CKSTRING category, CKSTRING key, IProperty* prop)
 {
 	Reload(_props[0]->GetInteger(), _props[1]->GetFloat());
+}
+
+void FramerateUnlocker::OnLoadObject(CKSTRING filename, BOOL isMap, CKSTRING masterName,
+	CK_CLASSID filterClass, BOOL addtoscene, BOOL reuseMeshes, BOOL reuseMaterials,
+	BOOL dynamic, XObjectArray* objArray, CKObject* masterObj)
+{
+	if (isMap)
+	{
+		Reload(_props[0]->GetInteger(), _props[1]->GetFloat());
+	}
 }
