@@ -6,16 +6,18 @@ IMod* BMLEntry(IBML* bml) {
 
 void FramerateUnlocker::Reload(int type, float framerate = 60.0)
 {
+	auto timeManager = m_bml->GetTimeManager();
 	if (type == 0)
 	{
-		m_bml->GetTimeManager()->ChangeLimitOptions(CK_FRAMERATE_SYNC);
+		timeManager->ChangeLimitOptions(CK_FRAMERATE_SYNC);
 	}
 	else if (type == 1) {
-		m_bml->GetTimeManager()->ChangeLimitOptions(CK_FRAMERATE_FREE);
+		timeManager->ChangeLimitOptions(CK_FRAMERATE_FREE, CK_BEHRATE_LIMIT);
+		timeManager->SetBehavioralRateLimit(1000.0);
 	}
 	else if (type == 2) {
-		m_bml->GetTimeManager()->SetFrameRateLimit(framerate);
-		m_bml->GetTimeManager()->ChangeLimitOptions(CK_FRAMERATE_LIMIT);
+		timeManager->SetFrameRateLimit(framerate);
+		timeManager->ChangeLimitOptions(CK_FRAMERATE_LIMIT);
 	}
 }
 
